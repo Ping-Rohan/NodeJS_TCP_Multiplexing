@@ -13,6 +13,7 @@ function multiplexChannels(sources, destination) {
           const outBuffer = Buffer.alloc(1 + 4 + chunk.length);
           outBuffer.writeUint8(i, 0);
           outBuffer.writeUint32BE(chunk.length, 1);
+          chunk.copy(outBuffer, 5);
           console.log(`Sending packet to channel ${i}`);
 
           destination.write(outBuffer);
