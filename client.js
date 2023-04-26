@@ -10,15 +10,10 @@ function multiplexChannels(sources, destination) {
         let chunk;
         while ((chunk = sources[i].read()) !== null) {
           // 1 for channel id , 4 for chunk length and remaining for actual data
-          console.log("chunk");
-          console.log(chunk);
           const outBuffer = Buffer.alloc(1 + 4 + chunk.length);
           outBuffer.writeUint8(i, 0);
           outBuffer.writeUint32BE(chunk.length, 1);
-          chunk.copy(outBuffer, 5);
           console.log(`Sending packet to channel ${i}`);
-          console.log("final Buffer");
-          console.log(outBuffer);
 
           destination.write(outBuffer);
         }
